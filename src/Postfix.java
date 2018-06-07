@@ -41,8 +41,9 @@ public class Postfix {
                 s.push(Character.getNumericValue(expr[i]));
             if (expr[i] == '*')
                 multiply();
-            if (expr[i] == '-')
+            if (expr[i] == '-') {
                 subtract();
+            }
             if (expr[i] == '+')
                 add();
             if (expr[i] == '/')
@@ -101,16 +102,16 @@ public class Postfix {
                     }
                     numberLength++;
                 }
-                else if (ch[i]>= 65 && ch[i]<= 70){
+                else if (ch[i]>= 65 && ch[i]<= 70) {
                     String hex = "0x" + ch[i];
                     int number = Integer.decode(hex);
-                    s.push(Character.getNumericValue(number));
+                    s.push(number);
                     if (numberLength > 0) {
                         int second = (int) s.peek();
                         s.pop();
                         int first = (int) s.peek();
                         s.pop();
-                        s.push (first * 16 + second);
+                        s.push(first * 16 + second);
                     }
                     numberLength++;
                 }
@@ -134,8 +135,11 @@ public class Postfix {
         String result = "";
         Stack<Character> p = new Stack<>();
         for (int i = 0; i < expr.length; i++) {
-            if (expr[i] >= 48 && expr[i] <= 57)
+            if ((expr[i] >= 48 && expr[i] <= 57) )
                 result += (Character.getNumericValue(expr[i]));
+            else if (expr[i] >= 65 && expr[i] <= 70 ) {
+                result += expr[i];
+            }
             else if (expr[i] == '(')
                 p.push(expr[i]);
             else if (expr[i] == ')') {

@@ -25,6 +25,10 @@ public class HexEngine extends CalcEngine {
 		}
 	}*/
 
+	public void letterPressed(String number) {
+		displayString+=number.toUpperCase();
+	}
+
 	@Override
 	public void equals() {
 		try {

@@ -19,7 +19,7 @@ public class HexInterface extends UserInterface implements ActionListener {
 	protected JButton ebutton;
 	protected JButton fbutton;
 
-	public HexInterface(HexEngine engine) {
+	public HexInterface(Engine engine) {
 		super(engine);
 
 		makebuttons();
@@ -84,28 +84,29 @@ public class HexInterface extends UserInterface implements ActionListener {
 
 		if (command.equals("A") || command.equals("B") || command.equals("C") || command.equals("D")
 				|| command.equals("E") || command.equals("F")) {
-			command = "0x" + command;
-			int number = Integer.decode(command);
+			//command = "0x" + command;
+			//int number = Integer.decode(command);
 			// System.out.println(number);
-			calc.numberPressed(number);
+			calc.op(command);
+			calc.setHexMode(true);
 		} else if (command.equals("HEX")) {
-			if (calc.isActive()) {
-				calc.setInactive();
+			if (calc.getHexMode()) {
+				calc.setHexMode(false);
 				activatebuttons(false);
 				showInfo();
 			} else {
-				calc.setActive();
+				calc.setHexMode(true);
 				activatebuttons(true);
 				switchbutton.setText("DEC");
 				showInfo();
 			}
 		} else if (command.equals("DEC")) {
-			if (!calc.isActive()) {
-				calc.setInactive();
+			if (!calc.getHexMode()) {
+				calc.setHexMode(false);
 				activatebuttons(false);
 				showInfo();
 			} else {
-				calc.setInactive();
+				calc.setHexMode(false);
 				activatebuttons(false);
 				switchbutton.setText("HEX");
 				showInfo();
@@ -127,8 +128,8 @@ public class HexInterface extends UserInterface implements ActionListener {
 
 	protected void redisplay() {
 
-		if (calc.isActive())
-			display.setText("" + calc.getHexDisplayValue());
+		if (calc.getHexMode())
+			display.setText("" + calc.getDisplayString());
 		else
 			super.redisplay();
 	}

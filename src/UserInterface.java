@@ -12,7 +12,7 @@ import javax.swing.border.*;
  * @version 2008.03.30
  */
 public class UserInterface implements ActionListener {
-	protected HexEngine calc;
+	protected Engine calc;
 	protected boolean showingAuthor;
 
 	protected JFrame frame;
@@ -25,7 +25,7 @@ public class UserInterface implements ActionListener {
 	 * @param engine
 	 *            The calculator engine.
 	 */
-	public UserInterface(HexEngine engine) {
+	public UserInterface(Engine engine) {
 		calc = engine;
 		showingAuthor = true;
 		makeFrame();
@@ -78,7 +78,7 @@ public class UserInterface implements ActionListener {
 		addButton(buttonPanel, "3");
 		addButton(buttonPanel, "*");
 
-		addButton(buttonPanel, "CE");
+		addButton(buttonPanel, "+/-");
 		addButton(buttonPanel, "0");
 		addButton(buttonPanel, "=");
 		addButton(buttonPanel, "/");
@@ -120,23 +120,25 @@ public class UserInterface implements ActionListener {
 			int number = Integer.parseInt(command);
 			calc.numberPressed(number);
 		} else if (command.equals("+")) {
-			calc.plus();
+			calc.op(command);
 		} else if (command.equals("-")) {
-			calc.minus();
+			calc.op(command);
 		} else if (command.equals("=")) {
 			calc.equals();
 		} else if (command.equals("CE")) {
 			calc.clear();
 		} else if (command.equals("*")) {
-			calc.multiply();
+			calc.op(command);
 		} else if (command.equals("/")) {
-			calc.divide();
+			calc.op(command);
 		} else if (command.equals("^")) {
-			calc.power();
+			calc.op(command);
 		} else if (command.equals("(")) {
-			calc.openP();
+			calc.op(command);
 		} else if (command.equals(")")) {
-			calc.closeP();
+			calc.op(command);
+		} else if (command.equals("+/-")){
+			//make negative
 		}
 		// else unknown command.
 

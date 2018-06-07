@@ -6,14 +6,14 @@
  * @version 2008.03.30
  */
 public class Calculator {
-	private HexEngine engine;
+	private Engine engine;
 	private HexInterface gui;
 
 	/**
 	 * Create a new calculator and show it.
 	 */
 	public Calculator() {
-		engine = new HexEngine();
+		engine = new Engine();
 		gui = new HexInterface(engine);
 	}
 
