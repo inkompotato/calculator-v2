@@ -1,9 +1,7 @@
 /**
- * The main class of a simple calculator. Create one of these and you'll get the
- * calculator on screen.
- * 
- * @author David J. Barnes and Michael Kolling
- * @version 2008.03.30
+ * Main class
+ * @author Jan Schelhaas, Pascal Polchow, Larissa Wagnerberger
+ * @version 2018.06.08
  */
 public class Calculator {
 	private Engine engine;

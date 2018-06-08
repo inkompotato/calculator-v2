@@ -1,6 +1,10 @@
 import java.util.Scanner;
 import java.util.Stack;
-
+/**
+ * UserInterface
+ * @author Jan Schelhaas, Pascal Polchow, Larissa Wagnerberger
+ * @version 2018.06.08
+ */
 
 public class Postfix {
 
@@ -213,7 +217,7 @@ public class Postfix {
         s.pop();
         int op1 = (int) s.peek();
         s.pop();
-        int result = op1 / op2;
+        int result = Math.round((float)op1/(float)op2);
         s.push(result);
     }
 

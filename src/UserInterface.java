@@ -4,12 +4,9 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 /**
- * A graphical user interface for the calculator. No calculation is being done
- * here. This class is responsible just for putting up the display on screen. It
- * then refers to the "CalcEngine" to do all the real work.
- * 
- * @author David J. Barnes and Michael Kolling
- * @version 2008.03.30
+ * UserInterface
+ * @author Jan Schelhaas, Pascal Polchow, Larissa Wagnerberger
+ * @version 2018.06.08
  */
 public class UserInterface implements ActionListener {
 	protected Engine calc;
@@ -18,6 +15,7 @@ public class UserInterface implements ActionListener {
 	protected JFrame frame;
 	protected JTextField display;
 	protected JLabel status;
+	protected JLabel error;
 
 	/**
 	 * Create a user interface.
@@ -85,8 +83,14 @@ public class UserInterface implements ActionListener {
 
 		contentPane.add(buttonPanel, BorderLayout.CENTER);
 
+		JPanel statuspanel = new JPanel (new BorderLayout());
+		error = new JLabel(calc.getError());
+		statuspanel.add(error, BorderLayout.WEST);
+
 		status = new JLabel(calc.getStatus());
-		contentPane.add(status, BorderLayout.SOUTH);
+		statuspanel.add(status, BorderLayout.EAST);
+
+		contentPane.add(statuspanel, BorderLayout.SOUTH);
 
 		frame.pack();
 	}
@@ -149,6 +153,7 @@ public class UserInterface implements ActionListener {
 	 * Update the interface display to show the current value of the calculator.
 	 */
 	protected void redisplay() {
+		showInfo();
 		display.setText("" + calc.getDisplayString());
 	}
 
@@ -158,5 +163,6 @@ public class UserInterface implements ActionListener {
 	 */
 	protected void showInfo() {
 		status.setText(calc.getStatus());
+		error.setText(calc.getError());
 	}
 }

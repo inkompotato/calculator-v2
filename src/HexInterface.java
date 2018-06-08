@@ -7,7 +7,11 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
+/**
+ * HexInterface
+ * @author Jan Schelhaas, Pascal Polchow, Larissa Wagnerberger
+ * @version 2018.06.08
+ */
 public class HexInterface extends UserInterface implements ActionListener {
 
 	protected JPanel hexpanel;
@@ -128,8 +132,10 @@ public class HexInterface extends UserInterface implements ActionListener {
 
 	protected void redisplay() {
 
-		if (calc.getHexMode())
+		if (calc.getHexMode()) {
+			showInfo();
 			display.setText("" + calc.getDisplayString());
+		}
 		else
 			super.redisplay();
 	}
