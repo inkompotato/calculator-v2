@@ -3,7 +3,7 @@ import java.util.Stack;
 /**
  * UserInterface
  * @author Jan Schelhaas, Pascal Polchow, Larissa Wagnerberger
- * @version 2018.06.08
+ * @version 2018.06.13
  */
 
 public class Postfix {
@@ -22,7 +22,10 @@ public class Postfix {
                 }
                 else {
                     try {
+                        System.out.println(infixToPostfix(line));
+                        System.out.println(s.size());
                         System.out.println(evaluate2(infixToPostfix(line),false));
+                        System.out.println(s.size());
                     } catch (UnknownCharacterException e) {
                 }
             }
@@ -66,11 +69,13 @@ public class Postfix {
      * @return result
      */
     public int evaluate2(String pfx, boolean hexmode) throws UnknownCharacterException{
+        s.removeAllElements();
         String[] expr = pfx.split("\\s");
         for (String st : expr) {
 
             char[] ch = st.toCharArray();
             int numberLength = 0;
+
             for (int i = 0; i < ch.length; i++) {
 
                 if (ch[i] == '*') {
@@ -125,7 +130,9 @@ public class Postfix {
             }
 
         }
-        return s.peek();
+        int result = s.peek();
+        s.pop();
+        return result;
     }
 
     /**
@@ -204,45 +211,51 @@ public class Postfix {
     }
 
     private void power() {
-        int op2 = (int) s.peek();
+        int op2 = s.peek();
         s.pop();
-        int op1 = (int) s.peek();
+        int op1 = s.peek();
         s.pop();
         int result = (int) Math.pow(op1, op2);
         s.push(result);
     }
 
     private void divide() {
-        int op2 = (int) s.peek();
+        int op2 = s.peek();
         s.pop();
-        int op1 = (int) s.peek();
+        int op1 = s.peek();
         s.pop();
         int result = Math.round((float)op1/(float)op2);
         s.push(result);
     }
 
     private void add() {
-        int op2 = (int) s.peek();
+        int op2 =  s.peek();
         s.pop();
-        int op1 = (int) s.peek();
+        int op1 = s.peek();
         s.pop();
-        int result = op1 + op2;
+        int result =  op1 + op2;
         s.push(result);
     }
 
     private void subtract() {
-        int op2 = (int) s.peek();
-        s.pop();
-        int op1 = (int) s.peek();
-        s.pop();
-        int result = op1 - op2;
-        s.push(result);
+        if (s.size()>1) {
+            int op2 = s.peek();
+            s.pop();
+            int op1 = s.peek();
+            s.pop();
+            int result = op1 - op2;
+            s.push(result);
+        } else {
+            int op1 = s.peek();
+            int result = op1*(-1);
+            s.push(result);
+        }
     }
 
     private void multiply() {
-        int op2 = (int) s.peek();
+        int op2 = s.peek();
         s.pop();
-        int op1 = (int) s.peek();
+        int op1 = s.peek();
         s.pop();
         int result = op1 * op2;
         s.push(result);

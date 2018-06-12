@@ -6,7 +6,7 @@ import javax.swing.border.*;
 /**
  * UserInterface
  * @author Jan Schelhaas, Pascal Polchow, Larissa Wagnerberger
- * @version 2018.06.08
+ * @version 2018.06.13
  */
 public class UserInterface implements ActionListener {
 	protected Engine calc;
@@ -142,7 +142,7 @@ public class UserInterface implements ActionListener {
 		} else if (command.equals(")")) {
 			calc.op(command);
 		} else if (command.equals("+/-")){
-			//make negative
+			calc.negate();
 		}
 		// else unknown command.
 

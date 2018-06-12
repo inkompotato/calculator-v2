@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 /**
  * HexInterface
  * @author Jan Schelhaas, Pascal Polchow, Larissa Wagnerberger
- * @version 2018.06.08
+ * @version 2018.06.13
  */
 public class HexInterface extends UserInterface implements ActionListener {
 
@@ -92,7 +92,7 @@ public class HexInterface extends UserInterface implements ActionListener {
 			//int number = Integer.decode(command);
 			// System.out.println(number);
 			calc.op(command);
-			calc.setHexMode(true);
+			//calc.setHexMode(true);
 		} else if (command.equals("HEX")) {
 			if (calc.getHexMode()) {
 				calc.setHexMode(false);

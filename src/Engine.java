@@ -2,33 +2,33 @@
 /**
  * UserInterface
  * @author Jan Schelhaas and Larissa Wagnerberger
- * @version 2018.06.08
+ * @version 2018.06.13
  */
 public class Engine {
     private String displayString = "";
     private boolean hexMode = false;
-    private String error ="";
+    private String error = "";
 
     public Engine() {
         clear();
     }
 
     public void numberPressed(int number) {
-        displayString+=number;
+        displayString += number;
     }
 
     public void equals() {
         try {
             Postfix p = new Postfix();
             //System.out.println(hexMode);
-            if (!hexMode){
+            if (!hexMode) {
                 displayString = String.valueOf(p.evaluate2(p.infixToPostfix(displayString), false));
             } else {
                 int result = p.evaluate2(p.infixToPostfix(displayString), true);
                 String sign = (Math.signum(result) < 0) ? "-" : "";
-                displayString = sign+Integer.toHexString(Math.abs(result)).toUpperCase();
+                displayString = sign + Integer.toHexString(Math.abs(result)).toUpperCase();
             }
-            error ="";
+            error = "";
 
         } catch (Exception e) {
             error = "Error while parsing expression: Illegal Character";
@@ -40,48 +40,75 @@ public class Engine {
         return hexMode;
     }
 
-    public void setHexMode(boolean hexMode){
-        this.hexMode = hexMode;
-        if (hexMode){
+    public void setHexMode(boolean hexMode) {
+
+        if (hexMode) {
             try {
-                displayString = Integer.toHexString(Integer.parseInt(displayString)).toUpperCase();
-                error ="";
-            } catch (Exception e){
+                int number = Integer.parseInt(displayString);
+                String sign = (Math.signum(number) < 0) ? "-" : "";
+                displayString = sign + Integer.toHexString(Math.abs(number)).toUpperCase();
+                error = "";
+            } catch (Exception e) {
                 if (!displayString.equals(""))
                     error = "Illegal Characters in DEC String";
             }
         } else {
             try {
-                int decoded = Integer.decode("0x"+displayString);
-                displayString = String.valueOf(decoded);
-                error ="";
-            } catch (Exception e){
+                String sign = (displayString.matches("^-.*")) ? "-" : "";
+                displayString = displayString.replaceAll("^-", "");
+                int decoded = Integer.decode("0x" + displayString);
+                displayString = sign + String.valueOf(decoded);
+                error = "";
+            } catch (Exception e) {
                 if (!displayString.equals(""))
                     error = "Illegal Characters in HEX String";
             }
         }
+        this.hexMode = hexMode;
     }
 
-    public void op(String op) {
-        displayString+= op;
-    }
+    public void negate() {
+            try {
+                String sign = (displayString.matches("^-.*")) ? "" : "-";
+                displayString = displayString.replaceAll("^-", "");
+                int decoded;
+                if (hexMode){
+                    decoded = Integer.decode("0x" + displayString);
+                    displayString = sign + Integer.toHexString(decoded).toUpperCase();
+                }
+                else {
+                    decoded = Integer.parseInt(displayString);
+                    displayString = sign + String.valueOf(decoded);
+                }
+                error = "";
 
-    public String getDisplayString() {
-        return displayString;
-    }
+            } catch (Exception e) {
+                error = "Unable to negate this expression";
+            }
+        }
 
-    public void clear() {
-        displayString = "";
-    }
 
-    public String getStatus() {
-        if (hexMode)
-            return "HEX";
-        else
-            return "DEC";
-    }
+        public void op (String op){
+            displayString += op;
+        }
 
-    public String getError() {
-        return error;
-    }
+        public String getDisplayString () {
+            return displayString;
+        }
+
+        public void clear () {
+            displayString = "";
+        }
+
+        public String getStatus () {
+            if (hexMode)
+                return "HEX";
+            else
+                return "DEC";
+        }
+
+        public String getError () {
+            return error;
+        }
+
 }
